@@ -76,16 +76,25 @@ public class Personagem {
             case KeyEvent.VK_UP:
                 this.deslocamentoEmY = 0;
                 break;
-
+            case KeyEvent.VK_W:
+                this.deslocamentoEmY = 0;
+                break;
             case KeyEvent.VK_DOWN:
                 this.deslocamentoEmY = 0;
                 break;
-
+            case KeyEvent.VK_S:
+                this.deslocamentoEmY = 0;
+                break;
             case KeyEvent.VK_LEFT:
                 this.deslocamentoEmX = 0;
                 break;
-
+            case KeyEvent.VK_A:
+                this.deslocamentoEmX = 0;
+                break;
             case KeyEvent.VK_RIGHT:
+                this.deslocamentoEmX = 0;
+                break;
+            case KeyEvent.VK_D:
                 this.deslocamentoEmX = 0;
                 break;
         }
