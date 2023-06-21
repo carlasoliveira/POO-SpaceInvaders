@@ -46,16 +46,25 @@ public class Personagem {
             case KeyEvent.VK_UP:
                 this.deslocamentoEmY = -this.velocidadeDeslocamento;
                 break;
-
+            case KeyEvent.VK_W:
+                this.deslocamentoEmY = -this.velocidadeDeslocamento;
+                break;
             case KeyEvent.VK_DOWN:
                 this.deslocamentoEmY = this.velocidadeDeslocamento;
                 break;
-
+            case KeyEvent.VK_S:
+                this.deslocamentoEmY = this.velocidadeDeslocamento;
+                break;
             case KeyEvent.VK_LEFT:
                 this.deslocamentoEmX = -this.velocidadeDeslocamento;
                 break;
-
+            case KeyEvent.VK_A:
+                this.deslocamentoEmX = -this.velocidadeDeslocamento;
+                break;
             case KeyEvent.VK_RIGHT:
+                this.deslocamentoEmX = this.velocidadeDeslocamento;
+                break;
+            case KeyEvent.VK_D:
                 this.deslocamentoEmX = this.velocidadeDeslocamento;
                 break;
         }
