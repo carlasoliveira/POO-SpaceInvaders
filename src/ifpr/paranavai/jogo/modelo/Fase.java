@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.Timer;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -19,6 +21,8 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
 
     private static final int DELAY = 5;
     private static final int VELOCIDADE_DE_DESLOCAMENTO = 3;
+
+    private static final int LARGURA_DA_JANELA = 1024;
 
     public Fase(){
         this.setFocusable(true);
@@ -36,6 +40,16 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
         Graphics2D graficos = (Graphics2D) g;
         graficos.drawImage(fundo, 0, 0, null);
         graficos.drawImage(personagem.getImagemPersonagem(), personagem.getPosicaoX(), personagem.getPosicaoY(), this);
+        ArrayList<Tiro> tiros = personagem.getTiros();
+        ArrayList<SuperTiro> superTiros = personagem.getSuperTiros();
+        for(Tiro tiro: tiros){
+            tiro.carregarTiro();
+            graficos.drawImage(tiro.getImagemTiro(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+        }
+        for (SuperTiro tiro: superTiros){
+            tiro.carregarSuperTiro();
+            graficos.drawImage(tiro.getImagemSuperTiro(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+        }
         g.dispose();
     }
 
@@ -46,7 +60,13 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        this.personagem.mover(e);
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            this.personagem.atirar();
+        } else if(e.getKeyCode() == KeyEvent.VK_Q){
+            this.personagem.atirarSuper();
+        } else {
+            this.personagem.mover(e);
+        }
     }
 
     @Override
@@ -57,6 +77,22 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         this.personagem.atualizar();
+        ArrayList<Tiro> tiros = personagem.getTiros();
+        for (int i = 0; i < tiros.size(); i++) {
+            if (tiros.get(i).getPosicaoEmX() > LARGURA_DA_JANELA){
+                tiros.remove(i);
+            } else {
+                tiros.get(i).atualizar();
+            }
+        }
+        ArrayList<SuperTiro> superTiros = personagem.getSuperTiros();
+        for (int i = 0; i < superTiros.size(); i++) {
+            if (superTiros.get(i).getPosicaoEmX() > LARGURA_DA_JANELA){
+                superTiros.remove(i);
+            } else {
+                superTiros.get(i).atualizar();
+            }
+        }
         repaint();
     }
 }

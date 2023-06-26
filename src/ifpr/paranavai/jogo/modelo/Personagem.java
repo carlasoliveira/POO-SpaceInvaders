@@ -2,6 +2,7 @@ package ifpr.paranavai.jogo.modelo;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -18,6 +19,9 @@ public class Personagem {
 
     private int velocidadeDeslocamento;
 
+    private ArrayList<Tiro> tiros;
+    private ArrayList<SuperTiro> superTiros;
+
     private static final int POSICAO_INICIAL_EM_X = 100;
     private static final int POSICAO_INICIAL_EM_Y = 100;
 
@@ -26,6 +30,8 @@ public class Personagem {
         this.posicaoX = 100;
         this.posicaoY = 100;
         this.velocidadeDeslocamento = velocidadeDeslocamento;
+        this.tiros = new ArrayList<Tiro>();
+        this.superTiros = new ArrayList<SuperTiro>();
     }
 
     public void carregar(){
@@ -100,6 +106,20 @@ public class Personagem {
         }
     }
 
+    public void atirar(){
+        int frenteNave = this.posicaoX + this.larguraImagem;
+        int meioNave = this.posicaoY + (this.alturaImagem/2);
+        Tiro tiro = new Tiro(frenteNave, meioNave);
+        this.tiros.add(tiro);
+    }
+
+    public void atirarSuper(){
+        int frenteNave = this.posicaoX + this.larguraImagem;
+        int meioNave = this.posicaoY + (this.alturaImagem/2);
+        SuperTiro superTiro = new SuperTiro(frenteNave, meioNave);
+        this.superTiros.add(superTiro);
+    }
+
     public int getPosicaoX() {
         return this.posicaoX;
     }
@@ -154,6 +174,31 @@ public class Personagem {
 
     public void setAlturaImagem(int alturaImagem) {
         this.alturaImagem = alturaImagem;
+    }
+
+
+    public int getVelocidadeDeslocamento() {
+        return this.velocidadeDeslocamento;
+    }
+
+    public void setVelocidadeDeslocamento(int velocidadeDeslocamento) {
+        this.velocidadeDeslocamento = velocidadeDeslocamento;
+    }
+
+    public ArrayList<Tiro> getTiros() {
+        return this.tiros;
+    }
+
+    public void setTiros(ArrayList<Tiro> tiros) {
+        this.tiros = tiros;
+    }
+
+    public ArrayList<SuperTiro> getSuperTiros() {
+        return this.superTiros;
+    }
+
+    public void setSuperTiros(ArrayList<SuperTiro> superTiros) {
+        this.superTiros = superTiros;
     }
 
 }
