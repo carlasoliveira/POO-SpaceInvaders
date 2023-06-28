@@ -15,38 +15,37 @@ public class Personagem {
 
     private Image imagemPersonagem;
     private int larguraImagem;
-    private int alturaImagem;  
+    private int alturaImagem;
 
     private int velocidadeDeslocamento;
 
     private ArrayList<Tiro> tiros;
     private ArrayList<SuperTiro> superTiros;
 
-    private static final int POSICAO_INICIAL_EM_X = 100;
-    private static final int POSICAO_INICIAL_EM_Y = 100;
+    private static final int POSICAO_INICIAL_EM_X = 0;
+    private static final int POSICAO_INICIAL_EM_Y = 0;
 
-    
-    public Personagem(int velocidadeDeslocamento){
-        this.posicaoX = 100;
-        this.posicaoY = 100;
+    public Personagem(int velocidadeDeslocamento) {
+        this.posicaoX = POSICAO_INICIAL_EM_X;
+        this.posicaoY = POSICAO_INICIAL_EM_Y;
         this.velocidadeDeslocamento = velocidadeDeslocamento;
         this.tiros = new ArrayList<Tiro>();
         this.superTiros = new ArrayList<SuperTiro>();
     }
 
-    public void carregar(){
+    public void carregar() {
         ImageIcon carregando = new ImageIcon("src\\recursos\\espaconave.png");
         this.imagemPersonagem = carregando.getImage();
-        this.alturaImagem = this.imagemPersonagem.getWidth(null);
-        this.larguraImagem = this.imagemPersonagem.getHeight(null);
+        this.alturaImagem = this.imagemPersonagem.getHeight(null);
+        this.larguraImagem = this.imagemPersonagem.getWidth(null);
     }
 
-    public void atualizar(){
+    public void atualizar() {
         this.posicaoX = this.posicaoX + this.deslocamentoEmX;
         this.posicaoY = this.posicaoY + this.deslocamentoEmY;
     }
 
-    public void mover(KeyEvent tecla){
+    public void mover(KeyEvent tecla) {
         int codigoTecla = tecla.getKeyCode();
         switch (codigoTecla) {
             case KeyEvent.VK_UP:
@@ -76,7 +75,7 @@ public class Personagem {
         }
     }
 
-    public void parar(KeyEvent tecla){
+    public void parar(KeyEvent tecla) {
         int codigoTecla = tecla.getKeyCode();
         switch (codigoTecla) {
             case KeyEvent.VK_UP:
@@ -106,16 +105,16 @@ public class Personagem {
         }
     }
 
-    public void atirar(){
+    public void atirar() {
         int frenteNave = this.posicaoX + this.larguraImagem;
-        int meioNave = this.posicaoY + (this.alturaImagem/2);
+        int meioNave = this.posicaoY + (this.alturaImagem / 2);
         Tiro tiro = new Tiro(frenteNave, meioNave);
         this.tiros.add(tiro);
     }
 
-    public void atirarSuper(){
+    public void atirarSuper() {
         int frenteNave = this.posicaoX + this.larguraImagem;
-        int meioNave = this.posicaoY + (this.alturaImagem/2);
+        int meioNave = this.posicaoY + (this.alturaImagem / 2);
         SuperTiro superTiro = new SuperTiro(frenteNave, meioNave);
         this.superTiros.add(superTiro);
     }
@@ -175,7 +174,6 @@ public class Personagem {
     public void setAlturaImagem(int alturaImagem) {
         this.alturaImagem = alturaImagem;
     }
-
 
     public int getVelocidadeDeslocamento() {
         return this.velocidadeDeslocamento;
