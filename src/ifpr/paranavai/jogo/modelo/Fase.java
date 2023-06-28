@@ -24,6 +24,9 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
 
     private static final int LARGURA_DA_JANELA = 1024;
 
+    private ArrayList<Inimigo> inimigos;
+    private static final int QTDE_DE_INIMIGOS = 40;
+
     public Fase(){
         this.setFocusable(true);
         this.setDoubleBuffered(true);
@@ -31,6 +34,9 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
         this.fundo = carregando.getImage();
         personagem = new Personagem(VELOCIDADE_DE_DESLOCAMENTO);
         personagem.carregar();
+
+        this.inicializaInimigos();
+
         addKeyListener(this);
         this.timer = new Timer(DELAY, this);
         this.timer.start();
@@ -49,6 +55,12 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
         for (SuperTiro tiro: superTiros){
             tiro.carregarSuperTiro();
             graficos.drawImage(tiro.getImagemSuperTiro(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+        }
+        for (Inimigo inimigo : inimigos) {
+            // Carregando imagem do objeto inimigo pelo método carregar.
+            inimigo.carregar();
+            // Desenhar o inimigo na nossa tela.
+            graficos.drawImage(inimigo.getImagemInimigo(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
         }
         g.dispose();
     }
@@ -93,6 +105,23 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
                 superTiros.get(i).atualizar();
             }
         }
+        for (int i = 0; i < inimigos.size(); i++) {
+            if (inimigos.get(i).getPosicaoEmX() < 0)
+                inimigos.remove(i);
+            else
+                inimigos.get(i).atualizar();
+        }
         repaint();
+    }
+
+     public void inicializaInimigos(){
+        inimigos = new ArrayList<Inimigo>();
+
+        for (int i = 0; i < QTDE_DE_INIMIGOS; i++) {
+            int x = (int) (Math.random() * 8000 + 1024);
+            int y = (int) (Math.random() * 650 + 30);
+            Inimigo inimigo = new Inimigo(x, y);
+            inimigos.add(inimigo);
+        }
     }
 }
