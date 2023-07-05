@@ -12,7 +12,7 @@ public class SuperTiro extends ElementoGrafico{
         this.setPosicaoEmY((this.getPosicaoEmY()- this.getAlturaImagem()/2));
     }
 
-    public void carregarSuperTiro(){
+    public void carregar(){
         ImageIcon carregandoSuperTiro = new ImageIcon("src\\recursos\\super-tiro.png");
         this.setImagem(carregandoSuperTiro.getImage());
         this.setAlturaImagem(getImagem().getHeight(null));

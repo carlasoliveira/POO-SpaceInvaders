@@ -50,4 +50,9 @@ public abstract class ElementoGrafico {
         this.alturaImagem = alturaImagem;
     }
 
+    //Corrigir métodos abstratos!!!
+    public abstract void carregar();
+
+    public abstract void atualizar();
+
 }
