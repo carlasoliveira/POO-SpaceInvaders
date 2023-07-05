@@ -45,22 +45,22 @@ public class Fase extends JPanel implements KeyListener, ActionListener{
     public void paint(Graphics g){
         Graphics2D graficos = (Graphics2D) g;
         graficos.drawImage(fundo, 0, 0, null);
-        graficos.drawImage(personagem.getImagemPersonagem(), personagem.getPosicaoX(), personagem.getPosicaoY(), this);
+        graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
         ArrayList<Tiro> tiros = personagem.getTiros();
         ArrayList<SuperTiro> superTiros = personagem.getSuperTiros();
         for(Tiro tiro: tiros){
             tiro.carregarTiro();
-            graficos.drawImage(tiro.getImagemTiro(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
         }
         for (SuperTiro tiro: superTiros){
             tiro.carregarSuperTiro();
-            graficos.drawImage(tiro.getImagemSuperTiro(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
         }
         for (Inimigo inimigo : inimigos) {
             // Carregando imagem do objeto inimigo pelo método carregar.
             inimigo.carregar();
             // Desenhar o inimigo na nossa tela.
-            graficos.drawImage(inimigo.getImagemInimigo(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
+            graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
         }
         g.dispose();
     }

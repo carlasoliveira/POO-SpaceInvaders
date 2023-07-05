@@ -1,77 +1,27 @@
 package ifpr.paranavai.jogo.modelo;
 
-import java.awt.Image;
-
 import javax.swing.ImageIcon;
 
-public class Tiro {
-    
-    private int posicaoEmX;
-    private int posicaoEmY;
-
-    private Image imagemTiro;
-    private int larguraImagemTiro;
-    private int alturaImagemTiro;
+public class Tiro extends ElementoGrafico{
 
     private static int VELOCIDADE = 2;
 
     public Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY){
         this.carregarTiro();
-        this.posicaoEmX = posicaoPersonagemEmX;
-        this.posicaoEmY = posicaoPersonagemEmY;        
-        this.posicaoEmY =  this.posicaoEmY - (this.alturaImagemTiro / 2);
+        this.setPosicaoEmX(posicaoPersonagemEmX);
+        this.setPosicaoEmY(posicaoPersonagemEmY);       
+        this.setPosicaoEmY((getPosicaoEmY()- getAlturaImagem()/2));
     }
 
     public void carregarTiro() {
         ImageIcon carregandoTiro = new ImageIcon("src\\recursos\\tiro.png");
-        this.imagemTiro = carregandoTiro.getImage();
-        this.alturaImagemTiro = this.imagemTiro.getHeight(null);
-        this.larguraImagemTiro = this.imagemTiro.getWidth(null);
+        this.setImagem(carregandoTiro.getImage());
+        this.setAlturaImagem(getImagem().getHeight(null));
+        this.setLarguraImagem(getImagem().getWidth(null));
     }    
 
     public void atualizar(){
-          this.posicaoEmX = this.posicaoEmX + VELOCIDADE;
-    }
-
-
-    public int getPosicaoEmX() {
-        return this.posicaoEmX;
-    }
-
-    public void setPosicaoEmX(int posicaoEmX) {
-        this.posicaoEmX = posicaoEmX;
-    }
-
-    public int getPosicaoEmY() {
-        return this.posicaoEmY;
-    }
-
-    public void setPosicaoEmY(int posicaoEmY) {
-        this.posicaoEmY = posicaoEmY;
-    }
-
-    public Image getImagemTiro() {
-        return this.imagemTiro;
-    }
-
-    public void setImagemTiro(Image imagemTiro) {
-        this.imagemTiro = imagemTiro;
-    }
-
-    public int getLarguraImagemTiro() {
-        return this.larguraImagemTiro;
-    }
-
-    public void setLarguraImagemTiro(int larguraImagemTiro) {
-        this.larguraImagemTiro = larguraImagemTiro;
-    }
-
-    public int getAlturaImagemTiro() {
-        return this.alturaImagemTiro;
-    }
-
-    public void setAlturaImagemTiro(int alturaImagem) {
-        this.alturaImagemTiro = alturaImagem;
+        this.setPosicaoEmX((getPosicaoEmX()+VELOCIDADE));
     }
 
 }
