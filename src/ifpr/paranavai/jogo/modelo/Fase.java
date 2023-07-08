@@ -21,6 +21,8 @@ public abstract class Fase extends JPanel implements ActionListener, KeyListener
     protected ArrayList<Inimigo> inimigos;
     protected Timer timer;
 
+    protected boolean emJogo = true;
+
     public Fase(){
         setFocusable(true);
         setDoubleBuffered(true);
@@ -42,5 +44,7 @@ public abstract class Fase extends JPanel implements ActionListener, KeyListener
 
     @Override
     public abstract void actionPerformed(ActionEvent e);
+
+    public abstract void verificarColisoes();
 
 }

@@ -10,7 +10,7 @@ public class Tiro extends ElementoGrafico{
         this.carregar();
         this.setPosicaoEmX(posicaoPersonagemEmX);
         this.setPosicaoEmY(posicaoPersonagemEmY);       
-        this.setPosicaoEmY((getPosicaoEmY()- getAlturaImagem()/2));
+        this.setPosicaoEmY((getPosicaoEmY()-getAlturaImagem()/2));
     }
 
     public void carregar() {

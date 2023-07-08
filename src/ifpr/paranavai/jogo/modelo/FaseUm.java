@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.Timer;
+import java.awt.Rectangle;
 
 import java.util.ArrayList;
 
@@ -40,21 +41,26 @@ public class FaseUm extends Fase{
 
     public void paint(Graphics g){
         Graphics2D graficos = (Graphics2D) g;
-        graficos.drawImage(fundo, 0, 0, null);
-        graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
-        ArrayList<Tiro> tiros = personagem.getTiros();
-        ArrayList<SuperTiro> superTiros = personagem.getSuperTiros();
-        for(Tiro tiro: tiros){
-            tiro.carregar();
-            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
-        }
-        for (SuperTiro tiro: superTiros){
-            tiro.carregar();
-            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
-        }
-        for (Inimigo inimigo : inimigos) {
-            inimigo.carregar();
-            graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
+        if(emJogo){
+            graficos.drawImage(fundo, 0, 0, null);
+            graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
+            ArrayList<Tiro> tiros = personagem.getTiros();
+            ArrayList<SuperTiro> superTiros = personagem.getSuperTiros();
+            for(Tiro tiro: tiros){
+                tiro.carregar();
+                graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+            }
+            for (SuperTiro tiro: superTiros){
+                tiro.carregar();
+                graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+            }
+            for (Inimigo inimigo : inimigos) {
+                inimigo.carregar();
+                graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
+            }
+        } else {
+            ImageIcon fimDeJogo = new ImageIcon("src\\recursos\\fimdejogo.png");
+            graficos.drawImage(fimDeJogo.getImage(), 0, 0, null);
         }
         g.dispose();
     }
@@ -85,26 +91,30 @@ public class FaseUm extends Fase{
         this.personagem.atualizar();
         ArrayList<Tiro> tiros = personagem.getTiros();
         for (int i = 0; i < tiros.size(); i++) {
-            if (tiros.get(i).getPosicaoEmX() > LARGURA_DA_JANELA){
-                tiros.remove(i);
+            Tiro tiro = tiros.get(i);
+            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA || !tiro.getEhVisivel()){
+                tiros.remove(tiro);
             } else {
-                tiros.get(i).atualizar();
+                tiro.atualizar();
             }
         }
         ArrayList<SuperTiro> superTiros = personagem.getSuperTiros();
         for (int i = 0; i < superTiros.size(); i++) {
-            if (superTiros.get(i).getPosicaoEmX() > LARGURA_DA_JANELA){
-                superTiros.remove(i);
+            SuperTiro spTiro = superTiros.get(i);
+            if (spTiro.getPosicaoEmX() > LARGURA_DA_JANELA || !spTiro.getEhVisivel()){
+                superTiros.remove(spTiro);
             } else {
-                superTiros.get(i).atualizar();
+                spTiro.atualizar();
             }
         }
         for (int i = 0; i < inimigos.size(); i++) {
-            if (inimigos.get(i).getPosicaoEmX() < 0)
-                inimigos.remove(i);
+            Inimigo inimigo = this.inimigos.get(i);
+            if (inimigo.getPosicaoEmX() < 0 || !inimigo.getEhVisivel())
+                inimigos.remove(inimigo);
             else
-                inimigos.get(i).atualizar();
+                inimigo.atualizar();
         }
+        this.verificarColisoes();
         repaint();
     }
     @Override
@@ -116,6 +126,29 @@ public class FaseUm extends Fase{
             int y = (int) (Math.random() * 650 + 30);
             Inimigo inimigo = new Inimigo(x, y);
             inimigos.add(inimigo);
+        }
+    }
+
+    @Override
+    public void verificarColisoes() {
+        Rectangle formaPersonagem = this.personagem.getRetangle();
+        for (int i = 0; i < this.inimigos.size(); i++) {
+            Inimigo inimigo = inimigos.get(i);
+            Rectangle formaInimigo = inimigo.getRetangle();
+            if (formaInimigo.intersects(formaPersonagem)) {
+                this.personagem.setEhVisivel(false);
+                inimigo.setEhVisivel(false);
+                emJogo = false;
+            }
+            ArrayList<Tiro> tiros = this.personagem.getTiros();
+            for (int j = 0; j < tiros.size(); j++) {
+                Tiro tiro = tiros.get(j);
+                Rectangle formaTiro = tiro.getRetangle();
+                if (formaInimigo.intersects(formaTiro)) {
+                    inimigo.setEhVisivel(false);
+                    tiro.setEhVisivel(false);
+                }
+            }
         }
     }
 }
